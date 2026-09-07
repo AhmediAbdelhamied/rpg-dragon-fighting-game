@@ -54,7 +54,8 @@ const monsters = [
     }
 ];
 
-const locations = [{
+const locations = [
+    {
     name: "town square",
     "button text": ["Go to store", "Go to cave", "Fight dragon"],
     "button functions": [goStore, goCave, fightDragon],
@@ -78,21 +79,27 @@ const locations = [{
     "button functions": [attack, dodge, goTown],
     text: "you are fighting a monster."
 },
+{
+    name:"kill monster",
+    "button text": ["Go to town square", "Go to town square", "Go to town square"],
+    "button functions": [goTown,goTown,goTown],
+    text: 'The monster screams "Arg!" as it dies. you gain experience point and find gold.'
+},
 { name:"lose",
     "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
-    "button functions": [goTown, goTown, goTown],
-    text: "You have been defeated. You lose."
+    "button functions": [restart, restart, restart],
+    text: "You die."
 
 },
 { name:"win",
     "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
-    "button functions": [goTown, goTown, goTown],
+    "button functions": [restart, restart, restart],
     text: "You have defeated the dragon. You win!"
 },
 {
     name:"easter egg",
     "button text": ["2", "8", "Go to town square"],
-    "button functions": [goTown, goTown, goTown],
+    "button functions": [pickTwo, pickEight, goTown],
     text: "You have found the easter egg! 28 is the answer to life, the universe, and everything."
 }
 ];
@@ -104,6 +111,7 @@ button2.onclick = goCave;
 button3.onclick = fightDragon;
 
 function update(location) {
+    monsterStats.style.display = "none";
     button1.innerText = location["button text"][0];
     button2.innerText = location["button text"][1];
     button3.innerText = location["button text"][2];
@@ -153,10 +161,12 @@ function buyWeapon() {
     }
 }
     else {
-        text.innerText = "You already have the most powerful weapon.";}
+        text.innerText = "You already have the most powerful weapon.";
         button2.innerText = "Sell weapon for 15 gold";
-        button2.onclick = sellweapon;
-}
+        button2.onclick = sellweapon;}
+
+    }
+    
 
 function sellweapon() {
     if (inventory.length > 1) {
@@ -187,7 +197,7 @@ function fightDragon() {
     gofight();
 }
 
-function gofight() {
+function goFight() {
     update(locations[3]);
     monsterHealth = monsters[fighting].health;
     monsterstats.style.display = "block";
